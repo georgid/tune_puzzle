@@ -1,0 +1,18 @@
+- highlighting of piece being played
+
+- indicate visually (e.g. with X and think) the correct position of pieces. This is especially important as a visual hint that the puzzle is scrambled in the beginning 
+
+- when the user touches a piece, playback should stop
+
+
+- when advancing to second level, the original should not be played automatically 
+
+- play original should play original (not correct order)
+
+- when the puzzle order is correct, the OK message should appear in the beginning
+
+
+
+future ideas: 
+—————————————
+whole sections 
