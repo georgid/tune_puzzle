@@ -19,6 +19,8 @@ class SecondViewController: UIViewController {
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
+    var shouldShowBadge = false
+    
     var prefix: String! {
         didSet {
             soundController.prefix = prefix
@@ -47,7 +49,7 @@ class SecondViewController: UIViewController {
         soundController.didStopPlaying = { [weak self] in
             self?.collectionView.isUserInteractionEnabled = true
         }
-        soundController.playOriginal()
+    //    soundController.playOriginal()
     }
     
     func getNextSong() {
@@ -76,7 +78,7 @@ class SecondViewController: UIViewController {
     }
     
     func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
-        
+        stopSong()
         switch(gesture.state) {
             
         case .began:
@@ -100,41 +102,35 @@ class SecondViewController: UIViewController {
     
     @IBAction func playInMyOrder() {
         if soundController.playMyOrder(order: myOrder) {
-            print("correct")
             soundController.didFinishPlayingSong = { [weak self] in
                 if self?.currentSong == self!.repository.songs.count - 1 {
                     self?.currentSong = 0
                 } else {
                     self?.currentSong += 1
                 }
+                
+                self?.showSuccessAlert()
+                
                 self?.getNextSong()
                 self?.setupSegments()
                 self?.collectionView.reloadData()
-                
-                
-                
-//                
-//                let alert = UIAlertController(title: "Good job!!", message: "You advanced one level", preferredStyle: UIAlertControllerStyle.alert)
-//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { [weak self] _ in
-//                    self?.soundController.playOriginal()
-//                }))
-//                self?.present(alert, animated: true, completion: nil)
-//                
-
-                
-                let appearance = SCLAlertView.SCLAppearance(
-                    showCloseButton: false
-                )
-                let alertView = SCLAlertView(appearance: appearance)
-                alertView.addButton("OK") { [weak self] in
-                    self?.soundController.playOriginal()
-                    self?.soundController.didFinishPlayingSong = nil
-                }
-                alertView.showSuccess("Good job!!", subTitle: "You advanced one level")
             }
         } else {
             SCLAlertView().showError("Uh oh!", subTitle: "Try again")
         }
+    }
+    
+    func showSuccessAlert() {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        alertView.addButton("OK") { [weak self] in
+            //          self?.soundController.playOriginal()
+            self?.shouldShowBadge = false
+            self?.soundController.didFinishPlayingSong = nil
+        }
+        alertView.showSuccess("Good job!!", subTitle: "You advanced one level")
     }
     
     @IBAction func stopSong() {
@@ -156,6 +152,7 @@ extension SecondViewController: UICollectionViewDataSource {
         if cell.noteView.piece == nil {
              cell.setupPieceView(piece: repository.songs[currentSong].pieces[index])
         }
+        
         return cell
     }
     
