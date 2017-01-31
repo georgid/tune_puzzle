@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sonic-visualiser>
+<sv>
+  <data>
+    <model id="11" name="Rihanna1.mp3: Notes" sampleRate="44100" start="16384" end="47360" type="sparse" dimensions="3" resolution="256" notifyOnAdd="true" dataset="10"  subtype="note" valueQuantization="0" minimum="346.889" maximum="378.853" units="Hz"/>
+    <dataset id="10" dimensions="3">
+      <point frame="16384" value="346.889" duration="8960" level="0.787402" label="" />
+      <point frame="31232" value="378.853" duration="10240" level="0.787402" label="" />
+      <point frame="47360" value="363.149" duration="14080" level="0.787402" label="" />
+    </dataset>
+  </data>
+  <display>
+    <layer id="20" type="notes" name="Notes &lt;2&gt;" model="11"  verticalScale="0" scaleMinimum="0" scaleMaximum="0"  colourName="Bright Red" colour="#ff0000" darkBackground="true" />
+  </display>
+</sv>
