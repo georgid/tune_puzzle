@@ -1,15 +1,26 @@
-- highlighting of piece being played
+Music puzzle
+—————————
+a smart phone app developed at [music hack day Sofia](http://music-hackathons.org/)
 
-- indicate visually (e.g. with X and think, or thumb up and thumb down) the correct position of pieces when the button ‘play puzzle’ is pressed. This is especially important as a visual hint that the puzzle is scrambled in the beginning. Remove popup!  
-
-- when the user touches a piece, playback should stop (WORKING ON…)
-
-
-- play original should play original (not correct order)
+- add visual indicator  (e.g. with X and thick) for the the correct position of pieces When ‘play puzzle’ is pressed the indication appears below the piece. When any puzzle pieces are reordered, their indicator disappears.   
+Remove popup!  (see design/)
 
 - when the puzzle order is correct, the ‘proceed to next level’ message should appear in the bottom, not as pop up! 
 
+
+- highlighting of piece being played
+
+- add frame around puzzle area 
+
+- make sure the correct order is not allowed as initial puzzle order
+
+- when the user touches a piece, playback should stop (WORKING ON…)
+
+- play original should play original (not correct order)
+
+
 - There should be indication of beats: either vertical lines blinking or metronome-like sound 
+
 
 future ideas: 
 —————————————
