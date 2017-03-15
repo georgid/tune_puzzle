@@ -13,6 +13,8 @@
 		2EE3B1CC1B559DC600E1DF11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EE3B1CA1B559DC600E1DF11 /* LaunchScreen.storyboard */; };
 		2EE3B1D81B55A20700E1DF11 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE3B1D71B55A20700E1DF11 /* SecondViewController.swift */; };
 		2EE3B1DD1B55A78C00E1DF11 /* TextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE3B1DC1B55A78C00E1DF11 /* TextCollectionViewCell.swift */; };
+		8B2E84C61E743D5200C8F2FC /* correct.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E84C41E743D5200C8F2FC /* correct.png */; };
+		8B2E84C71E743D5200C8F2FC /* non_correct.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E84C51E743D5200C8F2FC /* non_correct.png */; };
 		D42B50BF1E3CF65000CEAA4E /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B50BE1E3CF65000CEAA4E /* SoundController.swift */; };
 		D42B50D41E3D0D1200CEAA4E /* Rihanna21.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D42B50CA1E3D0D1200CEAA4E /* Rihanna21.mp3 */; };
 		D42B50D51E3D0D1200CEAA4E /* Rihanna22.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D42B50CB1E3D0D1200CEAA4E /* Rihanna22.mp3 */; };
@@ -45,6 +47,8 @@
 		2EE3B1CD1B559DC600E1DF11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EE3B1D71B55A20700E1DF11 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		2EE3B1DC1B55A78C00E1DF11 /* TextCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCollectionViewCell.swift; sourceTree = "<group>"; };
+		8B2E84C41E743D5200C8F2FC /* correct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = correct.png; sourceTree = "<group>"; };
+		8B2E84C51E743D5200C8F2FC /* non_correct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = non_correct.png; sourceTree = "<group>"; };
 		D42B50BE1E3CF65000CEAA4E /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		D42B50CA1E3D0D1200CEAA4E /* Rihanna21.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Rihanna21.mp3; sourceTree = "<group>"; };
 		D42B50CB1E3D0D1200CEAA4E /* Rihanna22.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Rihanna22.mp3; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 		2EE3B1D41B55A16600E1DF11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8B2E84C41E743D5200C8F2FC /* correct.png */,
+				8B2E84C51E743D5200C8F2FC /* non_correct.png */,
 				D4C182C01E3DFE0B00FD2461 /* Rihanna1.mp3 */,
 				D4C182C11E3DFE0B00FD2461 /* Rihanna2.mp3 */,
 				D4C182C21E3DFE0B00FD2461 /* Rihanna3.mp3 */,
@@ -231,12 +237,14 @@
 			files = (
 				D4C182CE1E3E06E400FD2461 /* Rihanna27.mp3 in Resources */,
 				D4C182BF1E3DFD9400FD2461 /* loginSpotify.png in Resources */,
+				8B2E84C61E743D5200C8F2FC /* correct.png in Resources */,
 				D42B50D41E3D0D1200CEAA4E /* Rihanna21.mp3 in Resources */,
 				D4C182CC1E3E06E400FD2461 /* Rihanna25.mp3 in Resources */,
 				D42C242B1E3DE5C100E32F54 /* Rihanna.json in Resources */,
 				D4C182CD1E3E06E400FD2461 /* Rihanna26.mp3 in Resources */,
 				D4C182C41E3DFE0B00FD2461 /* Rihanna1.mp3 in Resources */,
 				2EE3B1CC1B559DC600E1DF11 /* LaunchScreen.storyboard in Resources */,
+				8B2E84C71E743D5200C8F2FC /* non_correct.png in Resources */,
 				2EE3B1C91B559DC600E1DF11 /* Assets.xcassets in Resources */,
 				D42B50D71E3D0D1200CEAA4E /* Rihanna24.mp3 in Resources */,
 				D42B50D61E3D0D1200CEAA4E /* Rihanna23.mp3 in Resources */,
