@@ -15,11 +15,11 @@ class SecondViewController: UIViewController {
     var currentSong = 0
     
     @IBOutlet weak var collectionView: UICollectionView!
-    fileprivate var originalOrder: [Int] = []
-    fileprivate var myOrder: [Int] = []
+    fileprivate var originalOrder: [Int] = [] // correct order 0,1,2, ...
+    fileprivate var currentOrder: [Int] = [] // indices of pieces in current order
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
-    var currentPieceOrder: [Piece]!
+    var listOfPieces: [Piece]! // list of pieces
     
     var shouldShowBadge = false
     
@@ -31,7 +31,7 @@ class SecondViewController: UIViewController {
     var pieces: [String]! {
         didSet {
             soundController.songs = pieces
-            currentPieceOrder = repository.songs[currentSong].pieces
+            listOfPieces = repository.songs[currentSong].pieces
         }
     }
 
@@ -55,6 +55,9 @@ class SecondViewController: UIViewController {
     //    soundController.playOriginal()
     }
     
+    /**
+     switch to next exercise e.g. next song
+     */
     func getNextSong() {
         let song = repository.songs[currentSong]
         prefix = song.prefix
@@ -74,7 +77,7 @@ class SecondViewController: UIViewController {
             originalOrder.append(i)
         }
         
-        myOrder = originalOrder.shuffled()
+        currentOrder = originalOrder.shuffled()
     }
     
     func setupCollectionView() {
@@ -107,7 +110,7 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func playInMyOrder() {
-        if soundController.playMyOrder(order: myOrder) { // if order is correct plays the song ang goes to next level
+        if soundController.playMyOrder(order: currentOrder) { // if order is correct plays the song ang goes to next level
             soundController.didFinishPlayingSong = { [weak self] in
                 if self?.currentSong == self!.repository.songs.count - 1 {
                     self?.currentSong = 0
@@ -125,7 +128,7 @@ class SecondViewController: UIViewController {
             SCLAlertView().showError("Uh oh!", subTitle: "Try again")
             showCorrectPositionBadges()
             //BUG: to debug I would leave this line here, but it shouldn't:
-//            collectionView.reloadData() // needed in order to show badges
+//            collectionView.reloadData()
         }
     }
     
@@ -157,7 +160,7 @@ class SecondViewController: UIViewController {
 extension SecondViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myOrder.count
+        return currentOrder.count
     }
     
     /*
@@ -170,15 +173,15 @@ extension SecondViewController: UICollectionViewDataSource {
         
         
         // BUG: after calling collectionView.reloadData() this method gets called and the order of the pieces are being displayed incorrectly
-        let index: Int = myOrder[indexPath.item]
+        let index: Int = currentOrder[indexPath.item]
         if cell.noteView.piece == nil {
-            let piece = currentPieceOrder[index]
+            let piece = listOfPieces[index]
             cell.setupPieceView(piece: piece)
         }
         
         cell.badge.isHidden = !shouldShowBadge
         
-        if soundController.getCorrectOrder()[indexPath.item] == myOrder[indexPath.item] {
+        if soundController.getCorrectOrder()[indexPath.item] == currentOrder[indexPath.item] {
             cell.badge.image = #imageLiteral(resourceName: "correct.png")
         } else {
             cell.badge.image = #imageLiteral(resourceName: "non_correct.png")
@@ -189,14 +192,14 @@ extension SecondViewController: UICollectionViewDataSource {
     
     
     /*
-     This method is called every time a piece is reorderd
+     This method is called every time a piece is reordered
      */
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         
-        swap(&currentPieceOrder[sourceIndexPath.item],&currentPieceOrder[destinationIndexPath.item])
-        let temp = myOrder.remove(at: sourceIndexPath.item)
-        myOrder.insert(temp, at: destinationIndexPath.item)
+        swap(&listOfPieces[sourceIndexPath.item],&listOfPieces[destinationIndexPath.item])
+        let temp = currentOrder.remove(at: sourceIndexPath.item)
+        currentOrder.insert(temp, at: destinationIndexPath.item)
         
         
         for cell in collectionView.visibleCells {
@@ -224,8 +227,8 @@ extension SecondViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         let sourceIndex = originalIndexPath.item
         let destIndex = proposedIndexPath.item
-        (myOrder[sourceIndex], myOrder[destIndex]) = (myOrder[destIndex], myOrder[sourceIndex])
-        (currentPieceOrder[sourceIndex], currentPieceOrder[destIndex]) = (currentPieceOrder[destIndex], currentPieceOrder[sourceIndex])
+        (currentOrder[sourceIndex], currentOrder[destIndex]) = (currentOrder[destIndex], currentOrder[sourceIndex])
+        (listOfPieces[sourceIndex], listOfPieces[destIndex]) = (listOfPieces[destIndex], listOfPieces[sourceIndex])
         
         return proposedIndexPath
     }
