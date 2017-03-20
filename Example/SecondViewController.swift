@@ -31,7 +31,7 @@ class SecondViewController: UIViewController {
     var pieces: [String]! {
         didSet {
             soundController.songs = pieces
-            listOfPieces = repository.songs[currentSong].pieces
+            listOfPieces = repository.songs[currentSong].pieces // init list of pieces with pieces from song
         }
     }
 
@@ -110,7 +110,9 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func playInMyOrder() {
+        showCorrectPositionBadges()
         if soundController.playMyOrder(order: currentOrder) { // if order is correct plays the song ang goes to next level
+            
             soundController.didFinishPlayingSong = { [weak self] in
                 if self?.currentSong == self!.repository.songs.count - 1 {
                     self?.currentSong = 0
@@ -126,17 +128,26 @@ class SecondViewController: UIViewController {
             }
         } else { // order is incorrect, so show alert view
             SCLAlertView().showError("Uh oh!", subTitle: "Try again")
-            showCorrectPositionBadges()
-            //BUG: to debug I would leave this line here, but it shouldn't:
-//            collectionView.reloadData()
+//            showCorrectPositionBadges()
+
         }
     }
     
+    /**
+     check if positions are correct and show badges
+     */
     func showCorrectPositionBadges() {
         
-        // if you want the bug not to be visible commnet the following lines
         shouldShowBadge = true
-        collectionView.reloadData()
+        
+        for (index, cell) in collectionView.visibleCells.enumerated() {
+            if let cell = cell as? TextCollectionViewCell {
+                self.updateCellBadge(inputCell: cell, idxCell: index)
+
+            }
+        }
+
+        
     }
     
     func showSuccessAlert() {
@@ -164,44 +175,54 @@ extension SecondViewController: UICollectionViewDataSource {
     }
     
     /*
-     called everytime  play puzzle is pressed
+     called from collectionView.reloadData(), e.g. when the puzzle is initialied and on 'play puzzle' pressed
      */
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! TextCollectionViewCell
         
-        
-        // BUG: after calling collectionView.reloadData() this method gets called and the order of the pieces are being displayed incorrectly
         let index: Int = currentOrder[indexPath.item]
         if cell.noteView.piece == nil {
             let piece = listOfPieces[index]
             cell.setupPieceView(piece: piece)
         }
         
-        cell.badge.isHidden = !shouldShowBadge
+        self.updateCellBadge(inputCell: cell, idxCell: indexPath.item)
         
-        if soundController.getCorrectOrder()[indexPath.item] == currentOrder[indexPath.item] {
-            cell.badge.image = #imageLiteral(resourceName: "correct.png")
-        } else {
-            cell.badge.image = #imageLiteral(resourceName: "non_correct.png")
-        }
         print("cellForItemAt")
         return cell
     }
     
+    /**
+     update cell badge according to global flag shouldShowBadge
+     */
+    func updateCellBadge(inputCell: TextCollectionViewCell, idxCell: Int){
+        inputCell.badge.isHidden = !shouldShowBadge
+    
+        if soundController.getCorrectOrder()[idxCell] == currentOrder[idxCell]{
+            inputCell.badge.image = #imageLiteral(resourceName: "correct.png")
+        }
+        else {
+            inputCell.badge.image = #imageLiteral(resourceName: "non_correct.png")
+            }
+    
+    }
     
     /*
-     This method is called every time a piece is reordered
+     called every time a piece is reordered
      */
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         
-        swap(&listOfPieces[sourceIndexPath.item],&listOfPieces[destinationIndexPath.item])
-        let temp = currentOrder.remove(at: sourceIndexPath.item)
-        currentOrder.insert(temp, at: destinationIndexPath.item)
+//        swap(&listOfPieces[sourceIndexPath.item],&listOfPieces[destinationIndexPath.item])
+//        let temp = currentOrder.remove(at: sourceIndexPath.item)
+//        currentOrder.insert(temp, at: destinationIndexPath.item)
         
         
+        print ("moveItemAt")
+        
+        // hide all badges after move
         for cell in collectionView.visibleCells {
             if let cell = cell as? TextCollectionViewCell {
                 cell.badge.isHidden = true
@@ -218,18 +239,20 @@ extension SecondViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         // This method is called every time the user tries to move a cell
-        print("canMoveItemAt")
         return true
     }
 }
 
+/**
+ assures that a piece can be moved to a meaningful location. called many times in a row when a piece is dragged
+ */
 extension SecondViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         let sourceIndex = originalIndexPath.item
         let destIndex = proposedIndexPath.item
         (currentOrder[sourceIndex], currentOrder[destIndex]) = (currentOrder[destIndex], currentOrder[sourceIndex])
         (listOfPieces[sourceIndex], listOfPieces[destIndex]) = (listOfPieces[destIndex], listOfPieces[sourceIndex])
-        
+        print ("targetIndexPathForMoveFromItemAt")
         return proposedIndexPath
     }
 }
