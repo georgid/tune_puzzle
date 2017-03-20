@@ -111,7 +111,9 @@ class SecondViewController: UIViewController {
     
     @IBAction func playInMyOrder() {
         showCorrectPositionBadges()
-        if soundController.playMyOrder(order: currentOrder) { // if order is correct plays the song ang goes to next level
+        
+        if soundController.playMyOrder(order: currentOrder) {
+            // if order is correct plays the song ang goes to next level
             
             soundController.didFinishPlayingSong = { [weak self] in
                 if self?.currentSong == self!.repository.songs.count - 1 {
@@ -126,11 +128,8 @@ class SecondViewController: UIViewController {
                 self?.setupSegments()
                 self?.collectionView.reloadData()
             }
-        } else { // order is incorrect, so show alert view
-            SCLAlertView().showError("Uh oh!", subTitle: "Try again")
-//            showCorrectPositionBadges()
-
-        }
+        }  // if order is incorrect, do nothing
+        
     }
     
     /**
@@ -222,18 +221,40 @@ extension SecondViewController: UICollectionViewDataSource {
         
         print ("moveItemAt")
         
+
+        
         // hide all badges after move
         for cell in collectionView.visibleCells {
             if let cell = cell as? TextCollectionViewCell {
                 cell.badge.isHidden = true
+                
             }
         }
-//        if let cell1 = collectionView.cellForItem(at: sourceIndexPath) as? TextCollectionViewCell,
+
+        
+        
+///////////   hide only the badges of the two cells the one reordered and the one at which position it has been put
+//            if let cell1 = collectionView.cellForItem(at: sourceIndexPath) as? TextCollectionViewCell,
 //            let cell2 = collectionView.cellForItem(at:destinationIndexPath) as? TextCollectionViewCell {
 //            cell1.badge.isHidden = true
 //            cell2.badge.isHidden = true
 //        }
+
         
+ 
+//////////// hide all cells between the one removed and the one to which it is moved
+//        let idxSrc = sourceIndexPath.item
+//        let idxDestination = destinationIndexPath.item
+//        
+//        if idxSrc < idxDestination {
+//            let startIndexPath = sourceIndexPath
+//            let endIndexPath = destinationIndexPath
+//        }
+//        else {
+//            let startIndexPath = destinationIndexPath
+//            let endIndexPath = sourceIndexPath
+//        }
+//        // TODO: a loop from startIndexPath to endIndexPath
 
     }
     
