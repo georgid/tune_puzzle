@@ -20,7 +20,7 @@ class SongsRepository {
         guard let path = Bundle.main.path(forResource: "Rihanna", ofType: "json"),
             let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe),
             let jsonResult = try? JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) else {
-                print("errror")
+                print("errror on loading JSON")
                 return
         }
         
