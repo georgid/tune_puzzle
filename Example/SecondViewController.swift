@@ -19,6 +19,8 @@ class SecondViewController: UIViewController {
     fileprivate var currentOrder: [Int] = [] // indices of pieces in current order
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
+    fileprivate var tapGesture: UITapGestureRecognizer!
+
     var listOfPieces: [Piece]! // list of pieces
     
     var shouldShowBadge = false
@@ -90,6 +92,10 @@ class SecondViewController: UIViewController {
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(SecondViewController.handleLongGesture(_:)))
         longPressGesture.minimumPressDuration = 0
         collectionView.addGestureRecognizer(longPressGesture)
+    
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(SecondViewController.handleTapGesture(_:)))
+        longPressGesture.require(toFail: tapGesture)
+        collectionView.addGestureRecognizer(tapGesture)
     }
     
     func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -107,6 +113,21 @@ class SecondViewController: UIViewController {
             collectionView.endInteractiveMovement()
         default:
             collectionView.cancelInteractiveMovement()
+        }
+    }
+    
+    func handleTapGesture(_ gesture: UITapGestureRecognizer) {
+        switch(gesture.state) {
+            
+        case .ended:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+                break
+            }
+            print("selected: \(selectedIndexPath)")
+        case .began,.changed:
+            break
+        default:
+            break
         }
     }
     
@@ -267,10 +288,6 @@ extension SecondViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         // This method is called every time the user tries to move a cell
         return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(indexPath)")
     }
 }
 
