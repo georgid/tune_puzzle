@@ -52,6 +52,12 @@ class SecondViewController: UIViewController {
         soundController.didStopPlaying = { [weak self] in
             self?.collectionView.isUserInteractionEnabled = true
         }
+        
+        soundController.willPlaySegment = { [weak self] (index: Int) in 
+            let indexPath = IndexPath(item: index, section: 0)
+            self?.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+        }
+        
     //    soundController.playOriginal()
     }
     
@@ -261,6 +267,10 @@ extension SecondViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         // This method is called every time the user tries to move a cell
         return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("\(indexPath)")
     }
 }
 
