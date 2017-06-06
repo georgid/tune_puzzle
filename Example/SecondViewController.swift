@@ -19,6 +19,8 @@ class SecondViewController: UIViewController {
     fileprivate var currentOrder: [Int] = [] // indices of pieces in current order
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
+    fileprivate var tapGesture: UITapGestureRecognizer!
+
     var listOfPieces: [Piece]! // list of pieces
     
     var shouldShowBadge = false
@@ -52,6 +54,12 @@ class SecondViewController: UIViewController {
         soundController.didStopPlaying = { [weak self] in
             self?.collectionView.isUserInteractionEnabled = true
         }
+        
+        soundController.willPlaySegment = { [weak self] (index: Int) in 
+            let indexPath = IndexPath(item: index, section: 0)
+            self?.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+        }
+        
     //    soundController.playOriginal()
     }
     
@@ -84,6 +92,10 @@ class SecondViewController: UIViewController {
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(SecondViewController.handleLongGesture(_:)))
         longPressGesture.minimumPressDuration = 0
         collectionView.addGestureRecognizer(longPressGesture)
+    
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(SecondViewController.handleTapGesture(_:)))
+        longPressGesture.require(toFail: tapGesture)
+        collectionView.addGestureRecognizer(tapGesture)
     }
     
     func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -101,6 +113,21 @@ class SecondViewController: UIViewController {
             collectionView.endInteractiveMovement()
         default:
             collectionView.cancelInteractiveMovement()
+        }
+    }
+    
+    func handleTapGesture(_ gesture: UITapGestureRecognizer) {
+        switch(gesture.state) {
+            
+        case .ended:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+                break
+            }
+            print("selected: \(selectedIndexPath)")
+        case .began,.changed:
+            break
+        default:
+            break
         }
     }
     

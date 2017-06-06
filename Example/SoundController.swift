@@ -16,6 +16,7 @@ class SoundController: NSObject {
     
     var didStartPlaying: (()->())?
     var didStopPlaying: (()->())?
+    var willPlaySegment:((_ atIndex: Int)->())?
     
     var currentIndex = 0 {
         didSet {
@@ -65,6 +66,8 @@ class SoundController: NSObject {
                 print("error didn't find song")
             return
         }
+        willPlaySegment?(currentIndex)
+        
         player = try? AVAudioPlayer(contentsOf: url)
         player?.delegate = self
         player?.prepareToPlay()
