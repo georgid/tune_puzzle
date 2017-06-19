@@ -13,7 +13,17 @@
 
 - There should be indication of beats: either vertical lines blinking or metronome-like sound 
 
+- let the user select: 
+  - which musical aspect she likes: the instrument
+  - which song was most fun to play  
+Then change the recommendation based on that
+
+recommend based on similarity of a pattern example
+
+
+
 
 future ideas: 
 —————————————
 whole sections 
+
