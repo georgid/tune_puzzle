@@ -1,4 +1,15 @@
 
+Get spotify playing history:
+
+curl -X GET "https://api.spotify.com/v1/me/player/recently-played" -H "Authorization: Bearer {}"
+https://developer.spotify.com/news-stories/2017/03/01/new-endpoint-recently-played-tracks/
+https://www.hitchhq.com/spotify/documentation
+
+
+-----------------
+
+
+
 - when the puzzle order is correct, the ‘proceed to next level’ message should appear in the bottom, not as pop up! 
 
 
@@ -19,7 +30,6 @@
 Then change the recommendation based on that
 
 recommend based on similarity of a pattern example
-
 
 
 
