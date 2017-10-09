@@ -8,7 +8,9 @@ https://www.hitchhq.com/spotify/documentation
 
 -----------------
 
-
+for using an external http-based API (like musiMAP for now in branch for hackday Viena). 
+I used this library for http://swiftdeveloperblog.com/http-get-request-example-in-swift/ 
+----------------------------
 
 - when the puzzle order is correct, the ‘proceed to next level’ message should appear in the bottom, not as pop up! 
 
